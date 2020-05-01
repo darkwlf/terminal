@@ -1,6 +1,7 @@
 #!/usr/local/bin/python3.8
 import sys
 import os
+import getpass
 from termcolor import colored
 import requests
 import urllib
@@ -35,3 +36,5 @@ while True:
       print("directory removed!")
    elif a.startswith("pwd"):
       print(os.getcwd())
+   elif a.startswith("whoami"):
+      print(getpass.getuser())
