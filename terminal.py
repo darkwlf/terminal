@@ -38,3 +38,5 @@ while True:
       print(os.getcwd())
    elif a.startswith("whoami"):
       print(getpass.getuser())
+   elif a.startswith("python"):
+      os.system("python3.8")
