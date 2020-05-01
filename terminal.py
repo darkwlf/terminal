@@ -1,11 +1,20 @@
 #!/usr/local/bin/python3.8
 import sys
+from pythonping import ping
 import os
 import getpass
 from termcolor import colored
 import requests
 import urllib
 import wget
+def ip():
+   ip_request= requests.get("https://get.geojs.io/v1/ip.json")
+   my_ip = ip_request.json()['ip']
+   print("ip :"+my_ip)
+   url = 'https://get.geojs.io/v1/ip/geo/' +my_ip+".json"
+   geo_request = requests.get(url)
+   geo_result = geo_request.json()
+   print(geo_result)
 def dir():
    a = os.listdir()
    for i in a:
@@ -40,3 +49,8 @@ while True:
       print(getpass.getuser())
    elif a.startswith("python"):
       os.system("python3.8")
+   elif a.startswith("myip"):
+      ip()
+   elif a.startswith("ping "):
+      ping(a[5:],verbose=True)
+
