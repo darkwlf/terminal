@@ -1,4 +1,5 @@
 #!/usr/local/bin/python3.8
+import zipfile
 import pathlib
 import shutil
 import webview
@@ -86,3 +87,31 @@ while True:
    elif a.startswith("remove "):
       shutil.rmtree(a[7:])
       print("file deleted succesfully!")
+   elif a.startswith("zip "):
+      c = a[4:]
+      zf = zipfile.ZipFile(f"{c}.zip", "w", zipfile.ZIP_DEFLATED)
+      zf.write(c)
+      print(colored("file "+c+" created successfully!\nfor add files into "+c+" file type this command zip "+c,"green"))
+   elif a.startswith("unzip "):
+      d = a[6:]
+      z = zipfile.ZipFile(d)
+      z.extractall()
+      print(colored("file extracted successfully!","green"))
+   elif a.startswith("mkdir "):
+      os.mkdir(a[6:])
+      print(colored("file has created","green"))
+   elif a.startswith("cp"):
+      src = input("enter a file path to copy:")
+      des = input("enter a destination path to copy:")
+      cp = shutil.copyfile(src,des)
+      print(colored("file "+src+" has copied to "+des +" successfully!","green"))
+   elif a.startswith("mv"):
+      src = input("enter a file path to move:")
+      des = input("enter a destination path to move:")
+      dest = shutil.move(source, destination)  
+      print(colored("file "+src+ "moved successfully to "+des,"green"))
+   elif a.startswith("rename"):
+      inp = input("enter file path:")
+      inp2 = input("enter a file new name :")
+      os.rename(inp,inp2)
+      print(colored("file "+inp+" successfully renamed to "+inp2,"green"))
