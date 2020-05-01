@@ -2,6 +2,7 @@
 import zipfile
 import pathlib
 import shutil
+import keyboard
 import webview
 import bs4
 import time
@@ -15,6 +16,7 @@ from termcolor import colored
 import requests
 import urllib
 import wget
+
 def dir():
    a = os.listdir()
    for i in a:
@@ -105,6 +107,7 @@ while True:
       des = input("enter a destination path to copy:")
       cp = shutil.copyfile(src,des)
       print(colored("file "+src+" has copied to "+des +" successfully!","green"))
+      shutil.copytree(src, des)
    elif a.startswith("mv"):
       src = input("enter a file path to move:")
       des = input("enter a destination path to move:")
@@ -115,3 +118,8 @@ while True:
       inp2 = input("enter a file new name :")
       os.rename(inp,inp2)
       print(colored("file "+inp+" successfully renamed to "+inp2,"green"))
+   elif a.startswith("su"):
+      password = "admin"
+      a = input("your root password:")
+      print("logged in as "+a)
+      print("tip:default root password is admin.\n for change root password open terminal.py file and com to 58 line and change your password.")
