@@ -16,7 +16,43 @@ from termcolor import colored
 import requests
 import urllib
 import wget
-
+import tarfile
+from tqdm import tqdm
+def compress(tar_file, members):
+    """
+    Adds files (`members`) to a tar_file and compress it
+    """
+    # open file for gzip compressed writing
+    tar = tarfile.open(tar_file, mode="w:gz")
+    # with progress bar
+    # set the progress bar
+    progress = tqdm(members)
+    for member in progress:
+        # add file/folder/link to the tar file (compress)
+        tar.add(member)
+        # set the progress description of the progress bar
+        progress.set_description(f"Compressing {member}")
+    # close the file
+    tar.close()
+def decompress(tar_file, path, members=None):
+    """
+    Extracts `tar_file` and puts the `members` to `path`.
+    If members is None, all members on `tar_file` will be extracted.
+    """
+    tar = tarfile.open(tar_file, mode="r:gz")
+    if members is None:
+        members = tar.getmembers()
+    # with progress bar
+    # set the progress bar
+    progress = tqdm(members)
+    for member in progress:
+        tar.extract(member, path=path)
+        # set the progress description of the progress bar
+        progress.set_description(f"Extracting {member.name}")
+    # or use this
+    # tar.extractall(members=members, path=path)
+    # close the file
+    tar.close()
 def dir():
    a = os.listdir()
    for i in a:
@@ -31,12 +67,11 @@ def ip():
    print(geo_result)
 
 while True:
-   a = input("[root@localhost "+os.getcwd()+"]#:")
+   a = input("[root@localhost "+os.getcwd()+"]#")
    if a.startswith("echo "):
       print(a[5:])
    elif a.startswith("cd "):
       os.chdir(a[3:])
-      print(os.getcwd())
    elif a.startswith("ls"):
       dir()
    elif a.startswith("cat "):
@@ -83,21 +118,19 @@ while True:
       a = t.find_all('pre')
       for i in a:
          print(i.text+"\n")
-   elif a.startswith("webview"):
-      webview.create_window('Hello world', 'https://pywebview.flowrl.com/hello')
+   elif a.startswith("webview "):
+      webview.create_window(title, a[7:])
       webview.start()
    elif a.startswith("remove "):
       shutil.rmtree(a[7:])
       print("file deleted succesfully!")
    elif a.startswith("zip "):
       c = a[4:]
-      zf = zipfile.ZipFile(f"{c}.zip", "w", zipfile.ZIP_DEFLATED)
-      zf.write(c)
+      compress(c+".tar.gz", [c])
       print(colored("file "+c+" created successfully!\nfor add files into "+c+" file type this command zip "+c,"green"))
    elif a.startswith("unzip "):
       d = a[6:]
-      z = zipfile.ZipFile(d)
-      z.extractall()
+      decompress(d, "extracted")
       print(colored("file extracted successfully!","green"))
    elif a.startswith("mkdir "):
       os.mkdir(a[6:])
@@ -123,3 +156,8 @@ while True:
       a = input("your root password:")
       print("logged in as "+a)
       print("tip:default root password is admin.\n for change root password open terminal.py file and com to 58 line and change your password.")
+   elif a.startswith("exit"):
+      print("exited successfully!")
+      break
+   elif a.startswith("help"):
+      print(colored("\necho command:\nthe echo is for printing something on your terminal like:echo a / output:a\n\n\ncd command:\n\nis siwtch between directorys\nlike :cd /home\n\n","red"))
