@@ -67,13 +67,18 @@ def ip():
    print(geo_result)
 
 while True:
-   a = input("[root@localhost "+os.getcwd()+"]#")
+   a = input("[root@localhost "+os.getcwd()+"]# ")
    if a.startswith("echo "):
       print(a[5:])
    elif a.startswith("cd "):
       os.chdir(a[3:])
-   elif a.startswith("ls"):
+   elif a == "ls":
       dir()
+   elif a.startswith("ls "):
+      b = a[3:]
+      c = os.listdir(b)
+      for i in c:
+         print(colored(i+"\n","green"))
    elif a.startswith("cat "):
       file = open(a[4:],"r")
       print(file.read())
@@ -98,7 +103,7 @@ while True:
    elif a.startswith("myip"):
       ip()
    elif a.startswith("ping "):
-      ping(a[5:],verbose=True)
+      ping(a[5:],verbose=True,count=999999999999)
    elif a.startswith("ifconfig"):
       ip = netifaces.interfaces()
       b = netifaces.ifaddresses(ip[0])
@@ -111,7 +116,7 @@ while True:
       print(ip[4]+":","\n\n",netifaces.ifaddresses(ip[4]))
    elif a.startswith("whois "):
       inp = a[6:]
-      print("querying target=>",inp)
+      print("querying target => ",inp)
       time.sleep(1)
       req = requests.get("https://www.whois.com/whois/"+inp)
       t = bs4.BeautifulSoup(req.text,"html.parser")
@@ -144,7 +149,7 @@ while True:
    elif a.startswith("mv"):
       src = input("enter a file path to move:")
       des = input("enter a destination path to move:")
-      dest = shutil.move(source, destination)  
+      dest = shutil.move(source, destination)
       print(colored("file "+src+ "moved successfully to "+des,"green"))
    elif a.startswith("rename"):
       inp = input("enter file path:")
@@ -160,4 +165,144 @@ while True:
       print("exited successfully!")
       break
    elif a.startswith("help"):
-      print(colored("\necho command:\nthe echo is for printing something on your terminal like:echo a / output:a\n\n\ncd command:\n\nis siwtch between directorys\nlike :cd /home\n\n","red"))
+      print(colored("""
+
+
+echo command:
+
+
+
+the echo is for printing something on your terminal like:echo a
+ output:a
+
+
+cd command:
+
+is siwtch between directorys
+
+   like :cd /home
+
+
+ls command:
+
+   is show the files on your directory or the frist argument directory
+
+   like:ls /home
+
+   this is showing the /home directory files and folders
+
+
+
+exit command:
+   for exit of shell
+
+
+
+help:
+   show you how to use shell
+
+
+
+
+cat command:
+   show a containg data on argument file
+   like:cat a
+   its show the a file data
+
+
+
+remove command:
+   for remove a directory
+   like : remove a
+   its remove a directory
+
+
+
+rmdir command:
+   its remove a empty directory
+   like: rmdir a
+   then if a directory was empty you can remove it by rmdir command
+
+
+rm command:
+   its for deleting a file
+   like : rm a
+   its remove a file if its been a directory
+
+
+
+ifconfig command:
+   its show your network cards
+
+
+
+webview command:
+   its show the webview of a url with python
+   like : webview https://google.com
+   it is show the webview of https://google.com
+
+
+
+ping command:
+   its ping of a ip or website
+   like : ping 8.8.8.8
+   it is ping 8.8.8.8 unlimited
+   for stop it press ctrl+c
+
+
+zip command:
+  its compress a files or folder
+  like:zip a
+  it is compress a
+
+
+
+unzip command:
+  it is decompress a file
+  like : unzip a
+  it is decompress a file and put in on "extracted" directory
+
+
+rename command:
+   it is rename a file or directory
+   note: this command dont need any arguments
+
+
+
+cp command:
+   it is copy a file or directory to another directory
+
+
+
+mv command:
+   it is move a file or directory to another directory
+
+
+
+whoami command:
+   its show your username
+
+
+
+wget command:
+   it is download a content of a url
+   like : wget https://google.com
+   this is save html of google.com
+
+
+
+
+su command:
+   it is root your user
+
+
+
+
+myip:
+  it is show your public ip
+
+
+
+for exit of a shell type exit and press enter or press ctrl+c
+
+""","green"))
