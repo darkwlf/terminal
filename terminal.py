@@ -1,4 +1,6 @@
 #!/usr/local/bin/python3.8
+import pyttsx3
+import keyboard
 import random
 import socket
 import zipfile
@@ -114,7 +116,6 @@ def ip():
    geo_request = requests.get(url)
    geo_result = geo_request.json()
    print(geo_result)
-
 while True:
    a = input("[root@localhost "+os.getcwd()+"]# ")
    if a.startswith("echo "):
@@ -159,7 +160,13 @@ while True:
    elif a == "myip":
       ip()
    elif a.startswith("ping "):
-      ping(a[5:],verbose=True,count=999999999999)
+      ping(a[5:],verbose=True,count=99999)
+   elif a.startswith("say "):
+      b = a[4:]
+      s = pyttsx3.init()
+      s.setProperty('rate',110)
+      s.say(b)
+      s.runAndWait()
    elif a.startswith("dos "):
       dos()
    elif a.startswith("ifconfig"):
