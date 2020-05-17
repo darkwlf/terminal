@@ -1,4 +1,6 @@
 #!/usr/local/bin/python3.8
+import click
+from os.path import basename
 import pyttsx3
 import keyboard
 import random
@@ -24,6 +26,7 @@ import wget
 import tarfile
 from tqdm import tqdm
 import datetime
+from shutil import get_terminal_size
 def hardware():
     print('Platform architecture:', platform.architecture())
     print(colored("Platform processor:"+platform.processor(),"green"))
@@ -117,7 +120,7 @@ def ip():
    geo_result = geo_request.json()
    print(geo_result)
 while True:
-   a = input("[root@localhost "+os.getcwd()+"]# ")
+   a = input(f"[{getpass.getuser()}@localhost {basename(os.getcwd())}]# ")
    if a.startswith("echo "):
       print(a[5:])
    elif a.startswith("cd "):
@@ -142,6 +145,8 @@ while True:
       for member in progress:
         progress.set_description(f"downloading {url}")
       print("file is downloading")
+   elif a == "clear":
+      click.clear()
    elif a.startswith("rm "):
       s = a[3:]
       os.remove(s)
