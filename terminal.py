@@ -237,7 +237,7 @@ def nonroot():
 	   elif a == "su":
               pass
 	   elif a == "exit":
-	      break
+		   exit()
 	   elif a == "help":
 	      print(colored("""
 
@@ -982,6 +982,7 @@ while True:
    elif a == "exit":
       print("exited successfully!")
       break
+      exit()
    elif a == "help":
       print(colored("""
 
