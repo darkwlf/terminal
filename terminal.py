@@ -9,37 +9,41 @@ just dont copy source code please.
 good luck :)
 """
 ###############################
-from shutdown import *
-import py_compile
-import blkinfo
-import click
-from os.path import basename
-import pyttsx3
-import keyboard
-import random
-import socket
-import zipfile
-import pathlib
-import shutil
-import keyboard
-import webview
-import bs4
-import time
-import requests
-import netifaces
-import platform
-import getpass
-from pythonping import ping
-import sys
-import os
-from termcolor import colored
-import requests
-import urllib
-import wget
-import tarfile
-from tqdm import tqdm
-import datetime
-from shutil import get_terminal_size
+try:
+   from os import popen
+   from shutdown import *
+   import py_compile
+   import blkinfo
+   import click
+   from os.path import basename
+   import pyttsx3
+   import keyboard
+   import random
+   import socket
+   import zipfile
+   import pathlib
+   import shutil
+   import keyboard
+   import bs4
+   import time
+   import requests
+   import netifaces
+   import platform
+   import getpass
+   from pythonping import ping
+   import sys
+   import os
+   from termcolor import colored
+   import requests
+   import urllib
+   import wget
+   import tarfile
+   from tqdm import tqdm,trange
+   import tqdm
+   import datetime
+   from shutil import get_terminal_size
+except:
+   os.system("pip install -r requirments.txt")
 #def clear():
    #sys.stderr.write("\x1b[2J\x1b[H")
 #u"{}[2J{}[;H".format(chr(27), chr(27))
@@ -137,9 +141,18 @@ def ip():
    geo_request = requests.get(url)
    geo_result = geo_request.json()
    print(geo_result)
-
+a = getpass.getuser()
+user = input("enter your username:")
+b = getpass.getpass()
+if user == a and b == str(13851360):
+   print(f"loged in as {a}")
+   pass
+else:
+   print("flaiure login")
+   exit()
 while True:
-   a = input(f"[root@localhost {basename(os.getcwd())}]# ")
+   c = popen("whoami").read()
+   a = input(f"[root@{socket.gethostname().split('.')[0]} {basename(os.getcwd())}]# ")
    if a.startswith("echo "):
       print(a[5:])
    elif a.startswith("cd "):
@@ -154,10 +167,10 @@ while True:
    elif a == 'hostname':
       print(socket.gethostname())
    elif a == 'shutdown':
-      shutdown(time=5,force=False,warning_off=False)
+      shutdown(time=1,force=False,warning_off=False)
       print("your system shutdown 5 seconds later.if you want to cancel it write 'cancel' command")
    elif a == "reboot":
-      restart(time=5,force=False)
+      restart(time=1,force=False)
       print("your system reboot 5 seconds later.for cancel it write 'cancel' command")
    elif a.startswith("shutdown "):
       shutdown(time=a[9:],force=False,warning_off=False)
@@ -202,6 +215,8 @@ while True:
       time.sleep(a[6:])
    elif a.startswith("compile "):
       os.system('nuitka3 '+a[8:])
+      for i in tqdm.trange(100):
+         time.sleep(0.01)
    elif a == "hardware":
       hardware()
    elif a.startswith("pwd"):
@@ -242,15 +257,14 @@ while True:
       a = t.find_all('pre')
       for i in a:
          print(i.text+"\n")
-   elif a.startswith("webview "):
-      webview.create_window(title, a[7:])
-      webview.start()
    elif a.startswith("remove "):
       shutil.rmtree(a[7:])
       print("file deleted succesfully!")
    elif a.startswith("zip "):
       c = a[4:]
       compress(c+".tar.gz", [c])
+      for i in trange(100):
+          sleep(0.01)
       print(colored("file "+c+" created successfully!\nfor add files into "+c+" file type this command zip "+c,"green"))
    elif a.startswith("unzip "):
       d = a[6:]
@@ -260,19 +274,18 @@ while True:
       os.mkdir(a[6:])
       print(colored("file has created","green"))
    elif a.startswith("cp "):
-      src = a[3:]
-      des = input('enter destination:')
-      cp = shutil.copyfile(src,des)
-      print(colored("file "+src+" has copied to "+des +" successfully!","green"))
-      shutil.copytree(src, des)
+      src = a.split(" ")[1]
+      des = a.split(" ")[2]
+      print(src,des)
+      shutil.copy2(src,des)
    elif a.startswith("mv "):
-      src = a[3:]
-      des = input("enter a destination path to move:")
-      dest = shutil.move(source, destination)
+      src = a.split(" ")[1]
+      des = a.split(" ")[2]
+      dest = shutil.move(src, des)
       print(colored("file "+src+ "moved successfully to "+des,"green"))
    elif a.startswith("rename "):
-      inp = a[7:]
-      inp2 = input("enter a file new name :")
+      inp = a.split(" ")[1]
+      inp2 = a.split(" ")[2]
       os.rename(inp,inp2)
       print(colored("file "+inp+" successfully renamed to "+inp2,"green"))
    elif a == "whois":
@@ -421,10 +434,7 @@ wget command:
 su command:
    it is root your user
 
-
-
-
-myip:
+src
   it is show your public ip
 
 dos command:
@@ -447,3 +457,18 @@ time command:
 ""","green"))
    else:
       print(colored("command "+colored(a,"red")+colored(" not found!","green"),"green"))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
