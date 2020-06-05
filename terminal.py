@@ -9,41 +9,41 @@ just dont copy source code please.
 good luck :)
 """
 ###############################
-try:
-   from os import popen
-   from shutdown import *
-   import py_compile
-   import blkinfo
-   import click
-   from os.path import basename
-   import pyttsx3
-   import keyboard
-   import random
-   import socket
-   import zipfile
-   import pathlib
-   import shutil
-   import keyboard
-   import bs4
-   import time
-   import requests
-   import netifaces
-   import platform
-   import getpass
-   from pythonping import ping
-   import sys
-   import os
-   from termcolor import colored
-   import requests
-   import urllib
-   import wget
-   import tarfile
-   from tqdm import tqdm,trange
-   import tqdm
-   import datetime
-   from shutil import get_terminal_size
-except:
-   os.system("pip install -r requirments.txt")
+from os.path import basename
+import socket
+from os import popen
+import getpass
+import os
+import jdatetime
+from os import popen
+from shutdown import *
+import py_compile
+import blkinfo
+import click
+import pyttsx3
+import keyboard
+import random
+import socket
+import zipfile
+import pathlib
+import shutil
+import keyboard
+import bs4
+import time
+import requests
+import netifaces
+import platform
+from pythonping import ping
+import sys
+from termcolor import colored
+import requests
+import urllib
+import wget
+import tarfile
+from tqdm import tqdm,trange
+import tqdm
+import datetime
+from shutil import get_terminal_size
 #def clear():
    #sys.stderr.write("\x1b[2J\x1b[H")
 #u"{}[2J{}[;H".format(chr(27), chr(27))
@@ -183,6 +183,8 @@ while True:
       print("proccess caneceled.")
    elif a == "time":
       print(colored(datetime.datetime.now(),"blue"))
+   elif a == "jtime":
+      print(colored(jdatetime.datetime.now(),"green"))
    elif a.startswith("cat "):
       file = open(a[4:],"r")
       print(file.read())
@@ -455,8 +457,10 @@ time command:
 
 
 ""","green"))
+   elif a == " ":
+      pass
    else:
-      print(colored("command "+colored(a,"red")+colored(" not found!","green"),"green"))
+      print(colored("bash: "+colored(a,"red")+":"+colored(" command not found...","green"),"green"))
 
 
 
@@ -472,3 +476,7 @@ time command:
 
 
 
+
+#a.split(" ",1) میگوییم تعداد آرایه صفر و یک باشد.یعنی تعداد اندیس ها ۱ باشد
+#a.split(" ",0)همه مقادیر در یک اندیس ریخته میشود
+#a.split(" ",2)یک آرایه با طول سه اندیس.اگر سه تا اسپیس باشد کلمات قبل و بعد از آن رو در آرایه میریزد و هر کدام در یک اندیس 
