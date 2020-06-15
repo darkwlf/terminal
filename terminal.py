@@ -48,15 +48,18 @@ from shutil import get_terminal_size
    #sys.stderr.write("\x1b[2J\x1b[H")
 #u"{}[2J{}[;H".format(chr(27), chr(27))
 #keyboard.add_hotkey('ctrl+l', print,args=('\033[H\033[J'))
+
+
 def hardware():
     print('Platform architecture:', platform.architecture())
-    print(colored("Platform processor:"+platform.processor(),"green"))
-    print(colored('Machine type:'+platform.machine(),"green"))
-    print(colored('Systems network name:'+ platform.node(),"green"))
-    print(colored('Platform information:'+ platform.platform(),"green"))
-    print(colored('Platform processor:'+ platform.platform(),"green"))
-    print(colored('Operating system:'+ platform.system(),"green"))
-    print(colored('System info:'+ platform.system(),"green"))
+    print(colored("Platform processor:"+platform.processor(), "green"))
+    print(colored('Machine type:'+platform.machine(), "green"))
+    print(colored('Systems network name:'+ platform.node(), "green"))
+    print(colored('Platform information:'+ platform.platform(), "green"))
+    print(colored('Platform processor:'+ platform.platform(), "green"))
+    print(colored('Operating system:'+ platform.system(), "green"))
+    print(colored('System info:'+ platform.system(), "green"))
+
 
 def dos():
     print("""
@@ -141,6 +144,7 @@ def ip():
    geo_request = requests.get(url)
    geo_result = geo_request.json()
    print(geo_result)
+"""
 a = getpass.getuser()
 user = input("enter your username:")
 b = getpass.getpass()
@@ -150,6 +154,9 @@ if user == a and b == str(13851360):
 else:
    print("flaiure login")
    exit()
+"""
+print(datetime.datetime.now())
+print(jdatetime.datetime.now())
 while True:
    c = popen("whoami").read()
    a = input(f"[root@{socket.gethostname().split('.')[0]} {basename(os.getcwd())}]# ")
